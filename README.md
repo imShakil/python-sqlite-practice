@@ -1,3 +1,7 @@
+> Credit:Thanks to Andres Torres
+> Source: https://www.pythoncentral.io/introduction-to-sqlite-in-python/
+> python sqlite cheat-sheet
+
 ################################
 ## Using Python's SQLite Module #
 ################################
@@ -9,7 +13,6 @@ working with this database. This module is a SQL interface compliant with the DB
 
 
 ```python
-import os
 import random
 import sqlite3
 from src.main.user import USER  # USER class to initiate user data

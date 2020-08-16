@@ -9,7 +9,6 @@ applications as internal data storage. The Python Standard Library includes a mo
 working with this database. This module is a SQL interface compliant with the DB-API 2.0 specification.
 """
 
-import os
 import random
 import sqlite3
 from src.main.user import USER
@@ -265,3 +264,15 @@ for row in cursor:
 
 # close database connection
 db.close()
+
+
+###########################################
+# Using SQLite's date and datetime Types #
+###########################################
+
+"""
+Sometimes we need to insert and retrieve some date and datetime types in our SQLite3 database. When you execute the 
+insert query with a date or datetime object, the sqlite3 module calls the default adapter and converts them to an ISO 
+form at. When you execute a query in order to retrieve those values, the sqlite3 module is going to return a string object
+"""
+
