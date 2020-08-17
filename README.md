@@ -1,29 +1,29 @@
-> Credit:Thanks to Andres Torres
-> Source: https://www.pythoncentral.io/introduction-to-sqlite-in-python/
-> python sqlite cheat-sheet
-
-################################
-## Using Python's SQLite Module #
-################################
-
+# Python SQLite Cheat-Sheet
 SQLite3 is a very easy to use database engine. It is self-contained, serverless, zero-configuration and transactional.
 It is very fast and lightweight, and the entire database is stored in a single disk file. It is used in a lot of
 applications as internal data storage. The Python Standard Library includes a module called "sqlite3" intended for
 working with this database. This module is a SQL interface compliant with the DB-API 2.0 specification.
 
+**Table of Contents**
+- [SQLite Python Module](#import-sqlite-module)
+- [Connect and Creating Database](#connect-and-create-database)
+- [CREATE and DROP TABLE](#creating-create-and-deleting-drop-tables)
+- [INSERT INTO TABLE](#inserting-insert-data-into-the-database)
+- [SELECT FROM (data retrieving)](#retrieving-data-select-with-sqlite)
+- [UPDATE and DELETE FROM](#updating-update-and-deleting-delete-data)
+- [SQLite Transaction](#using-sqlite-transactions)
+- [Handling SQLite Exceptions](#sqlite-database-exceptions)
+- [SQLite Row Factory](#sqlite-row-factory-and-data-types)
+
+## Import SQLite Module
 
 ```python
 import random
 import sqlite3
-from src.main.user import USER  # USER class to initiate user data
 ```
 
 
-###########################
-## connect/create database #
-###########################
-
-
+## Connect and Create Database 
 We use the function ```sqlite3.connect``` to connect to the database. We can use the argument ```:memory:``` to create 
 a temporary DB in the RAM or pass the name of a file to open or create it.
 
@@ -40,22 +40,17 @@ cursor = db.cursor()
 ```
 
 
-################################################
-## Creating (CREATE) and Deleting (DROP) Tables #
-################################################
-
-
+## Creating (```CREATE```) and Deleting (```DROP```) Tables
 In order to make any operation with the database we need to get a cursor object and pass the SQL statements to the 
 cursor object to execute them. Finally it is necessary to commit the changes. We are going to create a users table with 
 name, phone, email and password columns.
-
 
 
 ```python
 # DROP TABLE
 cursor.execute("""DROP TABLE IF EXISTS users""")
 
-# CREATE
+# CREATE TABLE
 cursor.execute(
     """CREATE TABLE IF NOT EXISTS users(
                     id INTEGER PRIMARY KEY,
@@ -69,20 +64,19 @@ cursor.execute(
 db.commit()
 ```
 
-#############################################
-## Inserting (INSERT) Data into the Database #
-#############################################
-
-
+## Inserting (```INSERT```) Data into the Database
 To insert data we use the cursor to execute the query. If you need values from Python variables it is recommended 
 to use the "?" placeholder. Never use string operations or concatenation to make your queries because is very insecure.
 In this example we are going to insert two users in the database, their information is stored in python variables.
 
 ```python
-user = USER("Halim", "01234567890", "halim@email.com", "ha1234")
+name = 'Halim'
+phone = "01234567890"
+email = "halim@email.com"
+password = "ha1234"
 cursor.execute(
     """INSERT INTO users(name, phone, email, password) VALUES (?,?,?,?)""",
-    (user.name, user.phone, user.email, user.password),
+    (name, phone, email, password),
 )
 db.commit()
 ```
@@ -92,14 +86,17 @@ The values of the Python variables are passed inside a tuple.
 Another way to do this is passing a dictionary using the ```:key name``` placeholder:
 
 ```python
-user = USER("Alim", "01234567890", "alim@email.com", "al1234")
+name = "Alim"
+phone = "01234567890"
+email = "alim@email.com"
+password = "al1234"
 cursor.execute(
     """INSERT INTO users(name, phone, email, password) VALUES (:name, :phone, :email, :password)""",
     {
-        "name": user.name,
-        "phone": user.phone,
-        "email": user.email,
-        "password": user.password,
+        "name": name,
+        "phone": phone,
+        "email": email,
+        "password": password,
     },
 )
 db.commit()
@@ -111,22 +108,15 @@ cursor.executemany('''INSERT INTO users(name, phone, email, password) VALUES (?,
 db.commit()
 ```
 
-###################################
-## to get the last inserted row id #
-###################################
+### Get Last Row ID
 
-If you need to get the id of the row you just inserted use lastrowid
+If you need to get the id of the row you just inserted use ```lastrowid```
 
 ```python
 print(f'last row id: {cursor.lastrowid}')
 ```
 
-
-########################################
-## Retrieving Data (SELECT) with SQLite #
-########################################
-
-
+## Retrieving Data (```SELECT```) from Database
 To retrieve data, execute the query against the cursor object and then use ```fetchone()``` to retrieve a single row or 
 ```fetchall()``` to retrieve all the rows and ```fetchmany()``` to retrieve a particular number or rows.
 (note: retrieve rows fetched as a list where each row as a tuple)
@@ -147,7 +137,7 @@ user_all = cursor.fetchall()
 print(user_all)
 ```
 
-The cursor object works as an iterator, invoking fetchall() automatically
+The cursor object works as an iterator, invoking ```fetchall()``` automatically
 
 ```python
 cursor.execute('''SELECT name, email, phone FROM users''')
@@ -163,10 +153,7 @@ cursor.execute('''SELECT name, email, phone FROM users WHERE id=?''', (user_id,)
 print(cursor.fetchone())
 ```
 
-################################################
-## Updating (UPDATE) and Deleting (DELETE) Data #
-################################################
-
+## Updating (```UPDATE```) and Deleting (```DELETE```) Data
 The procedure to update or delete data is the same as inserting data
 
 ```python
@@ -179,12 +166,9 @@ cursor.execute('''DELETE FROM users WHERE id = ?''', (8,))
 db.commit()
 ```
 
-#############################
-## Using SQLite Transactions #
-#############################
-
-Transactions are an useful property of the database systems. It ensures the atomicity of the Database. Use commit() 
-method to save the changes and rollback() method to roll back any change to the database since the last call to commit.
+## Using SQLite Transactions
+Transactions are an useful property of the database systems. It ensures the atomicity of the Database. Use ```commit()``` 
+method to save the changes and ```rollback()``` method to roll back any change to the database since the last call to commit.
 
 ```python
 # update user phone with id = 5
@@ -196,11 +180,7 @@ Please remember to always call commit to save the changes. If you close the conn
 the file is lost (maybe the program finishes unexpectedly), not committed changes will be lost.
 
 
-##############################
-## SQLite Database Exceptions #
-##############################
-
-
+## SQLite Database Exceptions
 For best practices always surround the database operations with a try clause or a context manager.
 
 ```python
@@ -224,8 +204,7 @@ finally:
     db.close()
 ```
 
-## check integrity error
-
+### Check Integrity Error
 We can use the Connection object as context manager to automatically commit or rollback transactions
 
 ```python
@@ -249,10 +228,7 @@ gets printed; otherwise the transaction will be committed. Please note that we c
 cursor object.
 
 
-#####################################
-## SQLite Row Factory and Data Types #
-#####################################
-
+## SQLite Row Factory and Data Types 
 The following table shows the relation between SQLite datatypes and Python datatypes:
 
 - None type is converted to NULL
@@ -274,3 +250,6 @@ for row in cursor:
 # close database connection
 db.close()
 ```
+
+> Thanks to Andres Torres for awesome blog post <br> 
+> Source: https://www.pythoncentral.io/introduction-to-sqlite-in-python/
