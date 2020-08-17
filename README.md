@@ -16,7 +16,7 @@ working with this database. This module is a SQL interface compliant with the DB
 - [Connect and Creating Database](#connect-and-create-database)
 - [CREATE and DROP TABLE](#creating-create-and-deleting-drop-tables)
 - [INSERT INTO TABLE](#inserting-insert-data-into-the-database)
-- [SELECT FROM (data retrieving)](#retrieving-data-select-with-sqlite)
+- [SELECT FROM (data retrieving)](#retrieving-data-select-from-database)
 - [UPDATE and DELETE FROM](#updating-update-and-deleting-delete-data)
 - [SQLite Transaction](#using-sqlite-transactions)
 - [Handling SQLite Exceptions](#sqlite-database-exceptions)
@@ -109,9 +109,19 @@ cursor.execute(
 db.commit()
 
 # use list of users for inserting multiple user info
-users = [("Name "+str(i), str(random.randint(10000000, 1000000000)), "name"+str(i)+"@email.com", str(random.randint(10000, 90000))) for i in range(10)]
+users = [
+    (
+        "Name " + str(i),
+        str(random.randint(10000000, 1000000000)),
+        "name" + str(i) + "@email.com",
+        str(random.randint(10000, 90000)),
+    )
+    for i in range(10)
+]
 
-cursor.executemany('''INSERT INTO users(name, phone, email, password) VALUES (?, ?, ?, ?)''', users)
+cursor.executemany(
+    """INSERT INTO users(name, phone, email, password) VALUES (?, ?, ?, ?)""", users
+)
 db.commit()
 ```
 
@@ -120,7 +130,7 @@ db.commit()
 If you need to get the id of the row you just inserted use ```lastrowid```
 
 ```python
-print(f'last row id: {cursor.lastrowid}')
+print(f"last row id: {cursor.lastrowid}")
 ```
 
 ## Retrieving Data (```SELECT```) from Database
@@ -129,17 +139,13 @@ To retrieve data, execute the query against the cursor object and then use ```fe
 (note: retrieve rows fetched as a list where each row as a tuple)
 
 ```python
-cursor.execute('''SELECT name, phone, email FROM users''')
-
-# single row
+cursor.execute("""SELECT name, phone, email FROM users""")
 user1 = cursor.fetchone()
 print(user1)
 
-# particular number of rows
 user_many = cursor.fetchmany(5)
 print(user_many)
 
-# all rows
 user_all = cursor.fetchall()
 print(user_all)
 ```
@@ -147,16 +153,16 @@ print(user_all)
 The cursor object works as an iterator, invoking ```fetchall()``` automatically
 
 ```python
-cursor.execute('''SELECT name, email, phone FROM users''')
+cursor.execute("""SELECT name, email, phone FROM users""")
 for row in cursor:
-    print(f'name: {row[0]} email: {row[1]} phone: {row[2]}')
+    print(f"name: {row[0]} email: {row[1]} phone: {row[2]}")
 ```
 
 To retrieve data with conditions, use again the "?" placeholder
 
 ```python
 user_id = 5
-cursor.execute('''SELECT name, email, phone FROM users WHERE id=?''', (user_id,))
+cursor.execute("""SELECT name, email, phone FROM users WHERE id=?""", (user_id,))
 print(cursor.fetchone())
 ```
 
@@ -165,11 +171,11 @@ The procedure to update or delete data is the same as inserting data
 
 ```python
 # update user phone with id = 5
-cursor.execute('''UPDATE users SET phone = ? WHERE id = ?''', ('01710567890', user_id))
+cursor.execute("""UPDATE users SET phone = ? WHERE id = ?""", ("01710567890", user_id))
 db.commit()
 
 # delete user row with id = 8
-cursor.execute('''DELETE FROM users WHERE id = ?''', (8,))
+cursor.execute("""DELETE FROM users WHERE id = ?""", (8,))
 db.commit()
 ```
 
@@ -179,7 +185,7 @@ method to save the changes and ```rollback()``` method to roll back any change t
 
 ```python
 # update user phone with id = 5
-cursor.execute('''UPDATE users SET phone = ? WHERE id = ?''', ('01712567890', user_id))
+cursor.execute("""UPDATE users SET phone = ? WHERE id = ?""", ("01712567890", user_id))
 db.rollback()
 ```
 
@@ -193,13 +199,15 @@ For best practices always surround the database operations with a try clause or 
 ```python
 try:
     # create or connect database
-    db = sqlite3.connect('./data/test.db')
+    db = sqlite3.connect("./data/test.db")
 
     # get a cursor object
     cursor = db.cursor()
 
     # check if a table 'users' does exist or not and create it
-    cursor.execute('''CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, name TEXT, phone TEXT, email TEXT unique, password TEXT)''')
+    cursor.execute(
+        """CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, name TEXT, phone TEXT, email TEXT unique, password TEXT)"""
+    )
     # commit to save the changes
     db.commit()
 
@@ -215,15 +223,18 @@ finally:
 We can use the Connection object as context manager to automatically commit or rollback transactions
 
 ```python
-name1 = 'Mobarak'
-phone1 = '3366858'
-email1 = 'imshakil@github.com'
+name1 = "Mobarak"
+phone1 = "3366858"
+email1 = "imshakil@github.com"
 # A very secure password
-password1 = '12345'
+password1 = "12345"
 try:
-    db = sqlite3.connect('./data/test.db')
+    db = sqlite3.connect("./data/test.db")
     with db:
-        db.execute('''INSERT INTO users (name, phone, email, password) VALUES (?, ?, ?, ?)''', (name1, phone1, email1, password1))
+        db.execute(
+            """INSERT INTO users (name, phone, email, password) VALUES (?, ?, ?, ?)""",
+            (name1, phone1, email1, password1),
+        )
 except sqlite3.IntegrityError:
     print("Data already exists")
 finally:
@@ -247,12 +258,12 @@ The following table shows the relation between SQLite datatypes and Python datat
 The row factory class ```sqlite3.Row``` is used to access the columns of a query by name instead of by index.
 
 ```python
-db = sqlite3.connect('./data/test.db')
+db = sqlite3.connect("./data/test.db")
 db.row_factory = sqlite3.Row
 cursor = db.cursor()
-cursor.execute('''SELECT name, email, phone FROM users''')
+cursor.execute("""SELECT name, email, phone FROM users""")
 for row in cursor:
-    print(f'name : {row[0]}, email: {row[1]}, phone: {row[2]}')
+    print(f"name : {row[0]}, email: {row[1]}, phone: {row[2]}")
 
 # close database connection
 db.close()
