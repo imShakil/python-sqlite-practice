@@ -1,9 +1,10 @@
 # Python SQLite Cheat-Sheet
-[![GitHub issues](https://img.shields.io/github/stars/imshakil/python-sqlite-practice)](https://github.com/imshakil/python-sqlite-practice/stars)
-[![GitHub issues](https://img.shields.io/github/forks/imshakil/python-sqlite-practice)](https://github.com/imshakil/python-sqlite-practice/forks)
+[![GitHub stars](https://img.shields.io/github/stars/imshakil/python-sqlite-practice)](https://github.com/imshakil/python-sqlite-practice/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/imshakil/python-sqlite-practice)](https://github.com/imshakil/python-sqlite-practice/network)
 [![GitHub issues](https://img.shields.io/github/issues/imshakil/python-sqlite-practice)](https://github.com/imshakil/python-sqlite-practice/issues)
-[![GitHub issues](https://img.shields.io/github/license/imshakil/python-sqlite-practice)](https://github.com/imshakil/python-sqlite-practice/license)
+[![GitHub license](https://img.shields.io/github/license/imshakil/python-sqlite-practice)](https://github.com/imshakil/python-sqlite-practice)
 [![HitCount](http://hits.dwyl.io/imshakil/python-sqlite-practice.svg)](http://hits.dwyl.io/imshakil/python-sqlite-practice)
+[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fimshakil%2Fpython-sqlite-practice)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fimshakil%2Fpython-sqlite-practice)
 
 SQLite3 is a very easy to use database engine. It is self-contained, serverless, zero-configuration and transactional.
 It is very fast and lightweight, and the entire database is stored in a single disk file. It is used in a lot of
