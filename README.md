@@ -2,7 +2,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/imshakil/python-sqlite-practice)](https://github.com/imshakil/python-sqlite-practice/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/imshakil/python-sqlite-practice)](https://github.com/imshakil/python-sqlite-practice/network)
 [![GitHub issues](https://img.shields.io/github/issues/imshakil/python-sqlite-practice)](https://github.com/imshakil/python-sqlite-practice/issues)
-[![GitHub license](https://img.shields.io/github/license/imshakil/python-sqlite-practice)](https://github.com/imshakil/python-sqlite-practice)
+[![GitHub License](https://img.shields.io/github/license/imShakil/python-sqlite-practice)](https://github.com/imshakil/python-sqlite-practice)
 [![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fimshakil%2Fpython-sqlite-practice)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fimshakil%2Fpython-sqlite-practice)
 
 <!-- [![HitCount](https://hits.dwyl.com/imshakil/python-sqlite-practice.svg?style=flat-square)](http://hits.dwyl.com/imshakil/python-sqlite-practice)
