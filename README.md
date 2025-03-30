@@ -3,8 +3,11 @@
 [![GitHub forks](https://img.shields.io/github/forks/imshakil/python-sqlite-practice)](https://github.com/imshakil/python-sqlite-practice/network)
 [![GitHub issues](https://img.shields.io/github/issues/imshakil/python-sqlite-practice)](https://github.com/imshakil/python-sqlite-practice/issues)
 [![GitHub license](https://img.shields.io/github/license/imshakil/python-sqlite-practice)](https://github.com/imshakil/python-sqlite-practice)
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fimshakil%2Fpython-sqlite-practice)](https://imshakil.github.io/python-sqlite-practice/)
 [![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fimshakil%2Fpython-sqlite-practice)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fimshakil%2Fpython-sqlite-practice)
+
+<!-- [![HitCount](https://hits.dwyl.com/imshakil/python-sqlite-practice.svg?style=flat-square)](http://hits.dwyl.com/imshakil/python-sqlite-practice)
+#[![HitCount](https://hits.dwyl.com/imshakil/python-sqlite-practice.svg?style=flat-square&show=unique)](http://hits.dwyl.com/imshakil/python-sqlite-practice)
+-->
 
 SQLite3 is a very easy to use database engine. It is self-contained, serverless, zero-configuration and transactional.
 It is very fast and lightweight, and the entire database is stored in a single disk file. It is used in a lot of
